@@ -234,7 +234,7 @@ def write_html(f):
                     size_limit)
 
             f.write(
-                '    <h3 id="{}_{}">{}</h1>\n'.format(
+                '    <h3 id="{}_{}">{}</h3>\n'.format(
                     rect_set.name, size_limit_str, section_title))
 
             image_paths = []

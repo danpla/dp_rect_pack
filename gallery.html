@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>dp_rect_pack gallery</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            padding: 1em;
+            color: #333333;
+            font-family: sans-serif;
+            line-height: 1.5;
+        }
+        p {
+            max-width: 38em;
+        }
+        figure {
+            display: inline-block;
+            margin: 1em;
+        }
+        figure figcaption {
+            text-align: center;
+        }
+        figure a {
+            text-decoration: none;
+        }
+        img {
+            box-shadow: 0.1em 0.1em 0.2em #555555;
+        }
+    </style>
+  </head>
+  <body>
+    <h1>dp_rect_pack gallery</h1>
+
+    <p>This gallery shows <a href="https://danpla.github.io/dp_rect_pack">dp_rect_pack library</a> in action. Click on a thumbnail to see the full-size version of the image.</p>
+
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#rects">500 rectangles [6..100] × [6..100]</a></li>
+      <li><a href="#rects_tall">500 tall rectangles [6..30] × [30..100]</a></li>
+      <li><a href="#rects_wide">500 wide rectangles [30..100] × [6..30]</a></li>
+      <li><a href="#rects_pot">500 power of two rectangles 2<sup>[2..7]</sup> × 2<sup>[2..7]</sup></a></li>
+      <li><a href="#squares">500 squares [6..100]</a></li>
+      <li><a href="#squares_pot">500 power of two squares 2<sup>[2..7]</sup></a></li>
+    </ol>
+
+    <h2 id="rects">500 rectangles [6..100] × [6..100] (<a href="img/data/rects.txt">rects.txt</a>)</h2>
+    <h3 id="rects_infinite">Infinite page mode</h1>
+    <figure>
+      <a href="img/rects_infinite_0000.png" target="_blank">
+       <img src="img/rects_infinite_0000.png" title="P. 1, 1288 × 1215 px" width="320" height="320">
+      </a>
+      <figcaption>P. 1, 1288 × 1215 px</figcaption>
+    </figure>
+    <h3 id="rects_512">Multipage mode with 512 px size limit</h1>
+    <figure>
+      <a href="img/rects_512_0000.png" target="_blank">
+       <img src="img/rects_512_0000.png" title="P. 1, 511 × 511 px" width="319" height="319">
+      </a>
+      <figcaption>P. 1, 511 × 511 px</figcaption>
+    </figure>
+    <figure>
+      <a href="img/rects_512_0001.png" target="_blank">
+       <img src="img/rects_512_0001.png" title="P. 2, 505 × 505 px" width="316" height="316">
+      </a>
+      <figcaption>P. 2, 505 × 505 px</figcaption>
+    </figure>
+    <figure>
+      <a href="img/rects_512_0002.png" target="_blank">
+       <img src="img/rects_512_0002.png" title="P. 3, 510 × 510 px" width="319" height="319">
+      </a>
+      <figcaption>P. 3, 510 × 510 px</figcaption>
+    </figure>
+    <figure>
+      <a href="img/rects_512_0003.png" target="_blank">
+       <img src="img/rects_512_0003.png" title="P. 4, 509 × 509 px" width="318" height="318">
+      </a>
+      <figcaption>P. 4, 509 × 509 px</figcaption>
+    </figure>
+    <figure>
+      <a href="img/rects_512_0004.png" target="_blank">
+       <img src="img/rects_512_0004.png" title="P. 5, 512 × 512 px" width="320" height="320">
+      </a>
+      <figcaption>P. 5, 512 × 512 px</figcaption>
+    </figure>
+    <figure>
+      <a href="img/rects_512_0005.png" target="_blank">
+       <img src="img/rects_512_0005.png" title="P. 6, 462 × 425 px" width="289" height="289">
+      </a>
+      <figcaption>P. 6, 462 × 425 px</figcaption>
+    </figure>
+
+    <h2 id="rects_tall">500 tall rectangles [6..30] × [30..100] (<a href="img/data/rects_tall.txt">rects_tall.txt</a>)</h2>
+    <h3 id="rects_tall_infinite">Infinite page mode</h1>
+    <figure>
+      <a href="img/rects_tall_infinite_0000.png" target="_blank">
+       <img src="img/rects_tall_infinite_0000.png" title="P. 1, 806 × 768 px" width="320" height="320">
+      </a>
+      <figcaption>P. 1, 806 × 768 px</figcaption>
+    </figure>
+    <h3 id="rects_tall_512">Multipage mode with 512 px size limit</h1>
+    <figure>
+      <a href="img/rects_tall_512_0000.png" target="_blank">
+       <img src="img/rects_tall_512_0000.png" title="P. 1, 507 × 507 px" width="320" height="320">
+      </a>
+      <figcaption>P. 1, 507 × 507 px</figcaption>
+    </figure>
+    <figure>
+      <a href="img/rects_tall_512_0001.png" target="_blank">
+       <img src="img/rects_tall_512_0001.png" title="P. 2, 507 × 490 px" width="320" height="320">
+      </a>
+      <figcaption>P. 2, 507 × 490 px</figcaption>
+    </figure>
+    <figure>
+      <a href="img/rects_tall_512_0002.png" target="_blank">
+       <img src="img/rects_tall_512_0002.png" title="P. 3, 332 × 315 px" width="210" height="210">
+      </a>
+      <figcaption>P. 3, 332 × 315 px</figcaption>
+    </figure>
+
+    <h2 id="rects_wide">500 wide rectangles [30..100] × [6..30] (<a href="img/data/rects_wide.txt">rects_wide.txt</a>)</h2>
+    <h3 id="rects_wide_infinite">Infinite page mode</h1>
+    <figure>
+      <a href="img/rects_wide_infinite_0000.png" target="_blank">
+       <img src="img/rects_wide_infinite_0000.png" title="P. 1, 855 × 756 px" width="320" height="320">
+      </a>
+      <figcaption>P. 1, 855 × 756 px</figcaption>
+    </figure>
+    <h3 id="rects_wide_512">Multipage mode with 512 px size limit</h1>
+    <figure>
+      <a href="img/rects_wide_512_0000.png" target="_blank">
+       <img src="img/rects_wide_512_0000.png" title="P. 1, 495 × 495 px" width="310" height="310">
+      </a>
+      <figcaption>P. 1, 495 × 495 px</figcaption>
+    </figure>
+    <figure>
+      <a href="img/rects_wide_512_0001.png" target="_blank">
+       <img src="img/rects_wide_512_0001.png" title="P. 2, 511 × 511 px" width="320" height="320">
+      </a>
+      <figcaption>P. 2, 511 × 511 px</figcaption>
+    </figure>
+    <figure>
+      <a href="img/rects_wide_512_0002.png" target="_blank">
+       <img src="img/rects_wide_512_0002.png" title="P. 3, 362 × 350 px" width="227" height="227">
+      </a>
+      <figcaption>P. 3, 362 × 350 px</figcaption>
+    </figure>
+
+    <h2 id="rects_pot">500 power of two rectangles 2<sup>[2..7]</sup> × 2<sup>[2..7]</sup> (<a href="img/data/rects_pot.txt">rects_pot.txt</a>)</h2>
+    <h3 id="rects_pot_infinite">Infinite page mode</h1>
+    <figure>
+      <a href="img/rects_pot_infinite_0000.png" target="_blank">
+       <img src="img/rects_pot_infinite_0000.png" title="P. 1, 896 × 840 px" width="320" height="320">
+      </a>
+      <figcaption>P. 1, 896 × 840 px</figcaption>
+    </figure>
+    <h3 id="rects_pot_512">Multipage mode with 512 px size limit</h1>
+    <figure>
+      <a href="img/rects_pot_512_0000.png" target="_blank">
+       <img src="img/rects_pot_512_0000.png" title="P. 1, 512 × 512 px" width="320" height="320">
+      </a>
+      <figcaption>P. 1, 512 × 512 px</figcaption>
+    </figure>
+    <figure>
+      <a href="img/rects_pot_512_0001.png" target="_blank">
+       <img src="img/rects_pot_512_0001.png" title="P. 2, 512 × 512 px" width="320" height="320">
+      </a>
+      <figcaption>P. 2, 512 × 512 px</figcaption>
+    </figure>
+    <figure>
+      <a href="img/rects_pot_512_0002.png" target="_blank">
+       <img src="img/rects_pot_512_0002.png" title="P. 3, 448 × 428 px" width="280" height="280">
+      </a>
+      <figcaption>P. 3, 448 × 428 px</figcaption>
+    </figure>
+
+    <h2 id="squares">500 squares [6..100] (<a href="img/data/squares.txt">squares.txt</a>)</h2>
+    <h3 id="squares_infinite">Infinite page mode</h1>
+    <figure>
+      <a href="img/squares_infinite_0000.png" target="_blank">
+       <img src="img/squares_infinite_0000.png" title="P. 1, 1385 × 1344 px" width="320" height="320">
+      </a>
+      <figcaption>P. 1, 1385 × 1344 px</figcaption>
+    </figure>
+    <h3 id="squares_512">Multipage mode with 512 px size limit</h1>
+    <figure>
+      <a href="img/squares_512_0000.png" target="_blank">
+       <img src="img/squares_512_0000.png" title="P. 1, 512 × 497 px" width="320" height="320">
+      </a>
+      <figcaption>P. 1, 512 × 497 px</figcaption>
+    </figure>
+    <figure>
+      <a href="img/squares_512_0001.png" target="_blank">
+       <img src="img/squares_512_0001.png" title="P. 2, 512 × 507 px" width="320" height="320">
+      </a>
+      <figcaption>P. 2, 512 × 507 px</figcaption>
+    </figure>
+    <figure>
+      <a href="img/squares_512_0002.png" target="_blank">
+       <img src="img/squares_512_0002.png" title="P. 3, 512 × 508 px" width="320" height="320">
+      </a>
+      <figcaption>P. 3, 512 × 508 px</figcaption>
+    </figure>
+    <figure>
+      <a href="img/squares_512_0003.png" target="_blank">
+       <img src="img/squares_512_0003.png" title="P. 4, 508 × 505 px" width="318" height="318">
+      </a>
+      <figcaption>P. 4, 508 × 505 px</figcaption>
+    </figure>
+    <figure>
+      <a href="img/squares_512_0004.png" target="_blank">
+       <img src="img/squares_512_0004.png" title="P. 5, 512 × 507 px" width="320" height="320">
+      </a>
+      <figcaption>P. 5, 512 × 507 px</figcaption>
+    </figure>
+    <figure>
+      <a href="img/squares_512_0005.png" target="_blank">
+       <img src="img/squares_512_0005.png" title="P. 6, 498 × 492 px" width="311" height="311">
+      </a>
+      <figcaption>P. 6, 498 × 492 px</figcaption>
+    </figure>
+    <figure>
+      <a href="img/squares_512_0006.png" target="_blank">
+       <img src="img/squares_512_0006.png" title="P. 7, 509 × 502 px" width="318" height="318">
+      </a>
+      <figcaption>P. 7, 509 × 502 px</figcaption>
+    </figure>
+    <figure>
+      <a href="img/squares_512_0007.png" target="_blank">
+       <img src="img/squares_512_0007.png" title="P. 8, 227 × 214 px" width="142" height="142">
+      </a>
+      <figcaption>P. 8, 227 × 214 px</figcaption>
+    </figure>
+
+    <h2 id="squares_pot">500 power of two squares 2<sup>[2..7]</sup> (<a href="img/data/squares_pot.txt">squares_pot.txt</a>)</h2>
+    <h3 id="squares_pot_infinite">Infinite page mode</h1>
+    <figure>
+      <a href="img/squares_pot_infinite_0000.png" target="_blank">
+       <img src="img/squares_pot_infinite_0000.png" title="P. 1, 1344 × 1328 px" width="320" height="320">
+      </a>
+      <figcaption>P. 1, 1344 × 1328 px</figcaption>
+    </figure>
+    <h3 id="squares_pot_512">Multipage mode with 512 px size limit</h1>
+    <figure>
+      <a href="img/squares_pot_512_0000.png" target="_blank">
+       <img src="img/squares_pot_512_0000.png" title="P. 1, 512 × 512 px" width="320" height="320">
+      </a>
+      <figcaption>P. 1, 512 × 512 px</figcaption>
+    </figure>
+    <figure>
+      <a href="img/squares_pot_512_0001.png" target="_blank">
+       <img src="img/squares_pot_512_0001.png" title="P. 2, 512 × 512 px" width="320" height="320">
+      </a>
+      <figcaption>P. 2, 512 × 512 px</figcaption>
+    </figure>
+    <figure>
+      <a href="img/squares_pot_512_0002.png" target="_blank">
+       <img src="img/squares_pot_512_0002.png" title="P. 3, 512 × 512 px" width="320" height="320">
+      </a>
+      <figcaption>P. 3, 512 × 512 px</figcaption>
+    </figure>
+    <figure>
+      <a href="img/squares_pot_512_0003.png" target="_blank">
+       <img src="img/squares_pot_512_0003.png" title="P. 4, 512 × 512 px" width="320" height="320">
+      </a>
+      <figcaption>P. 4, 512 × 512 px</figcaption>
+    </figure>
+    <figure>
+      <a href="img/squares_pot_512_0004.png" target="_blank">
+       <img src="img/squares_pot_512_0004.png" title="P. 5, 512 × 512 px" width="320" height="320">
+      </a>
+      <figcaption>P. 5, 512 × 512 px</figcaption>
+    </figure>
+    <figure>
+      <a href="img/squares_pot_512_0005.png" target="_blank">
+       <img src="img/squares_pot_512_0005.png" title="P. 6, 512 × 512 px" width="320" height="320">
+      </a>
+      <figcaption>P. 6, 512 × 512 px</figcaption>
+    </figure>
+    <figure>
+      <a href="img/squares_pot_512_0006.png" target="_blank">
+       <img src="img/squares_pot_512_0006.png" title="P. 7, 448 × 448 px" width="280" height="280">
+      </a>
+      <figcaption>P. 7, 448 × 448 px</figcaption>
+    </figure>
+
+  </body>
+</html> 

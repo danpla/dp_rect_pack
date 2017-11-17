@@ -166,8 +166,8 @@ static void testInsert()
         assert(packer.getNumPages() == 1);
         GeomT w, h;
         packer.getPageSize(0, w, h);
-        assert(w = padding.left + padding.right);
-        assert(h = padding.top + padding.bottom);
+        assert(w == padding.left + padding.right);
+        assert(h == padding.top + padding.bottom);
     }
 
     // Grow down; root.w < rect.w

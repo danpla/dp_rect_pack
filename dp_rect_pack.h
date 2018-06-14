@@ -78,8 +78,8 @@ struct InsertStatus {
  *     * Comparison
  *
  * For the worst case, IndexT should be able to hold an integer in
- * range [0..N * 2], where N is the total number rectangles you plan
- * to pack.
+ * range [0..N * 2], where N is the total number of rectangles you
+ * plan to pack.
  *
  * \tparam GeomT numeric type to use for geometry
  * \tparam IndexT integral type to use internally for node indices
@@ -92,7 +92,7 @@ public:
         GeomT y;  ///< Vertical spacing
 
         /**
-         * Construct a Spacing with the same spacing for both dimensions.
+         * Construct Spacing with the same spacing for both dimensions.
          */
         explicit Spacing(GeomT spacing)
             : x(spacing)
@@ -112,7 +112,7 @@ public:
         GeomT right;
 
         /**
-         * Construct a Padding with the same padding for all sides.
+         * Construct Padding with the same padding for all sides.
          */
         explicit Padding(GeomT padding)
             : top(padding)
@@ -184,12 +184,12 @@ public:
      * rectangles, and all calls to insert() will result in
      * InsertStatus::rectTooBig.
      *
-     * \param maxPageWidth maximum width of the page, including
+     * \param maxPageWidth maximum width of a page, including
      *     the horizontal padding
-     * \param maxPageHeight maximum height of the page, including
+     * \param maxPageHeight maximum height of a page, including
      *     the vertical padding
      * \param rectsSpacing space between rectangles
-     * \param pagePadding space between rectangles and an edge of a page
+     * \param pagePadding space between rectangles and edges of a page
      */
     RectPacker(
         GeomT maxPageWidth, GeomT maxPageHeight,
@@ -470,11 +470,11 @@ bool RectPacker<GeomT, IndexT>::Page::findNode(
  * then vertically along the right edge of the rect. Splitting
  * that way is crucial for the algorithm to work correctly.
  *
- *      +===+
+ *      +---+
  *      |   |
- *  +===+===+
+ *  +---+---+
  *  |       |
- *  +=======+
+ *  +-------+
  */
 template<typename GeomT, typename IndexT>
 void RectPacker<GeomT, IndexT>::Page::subdivideNode(

@@ -8,8 +8,8 @@ import random
 import subprocess
 import sys
 import textwrap
-
-from PIL import Image
+import struct
+import io
 
 
 LIB_URL = 'https://danpla.github.io/dp_rect_pack'
@@ -150,6 +150,16 @@ def render_images():
             render_image(rect_set.name, size_limit)
 
 
+def get_png_size(path):
+    with open(path, 'rb') as f:
+        if f.read(8) != b'\x89PNG\x0d\x0a\x1a\x0a':
+            raise ValueError('Not a PNG file')
+        f.seek(4, io.SEEK_CUR)  # Skip chunk length
+        if f.read(4) != b'IHDR':
+            raise ValueError('Corrupt PNG file')
+        return struct.unpack('>2I', f.read(8))
+
+
 def write_html(f):
     f.write(textwrap.dedent("""\
         <!DOCTYPE html>
@@ -248,10 +258,9 @@ def write_html(f):
                     break
 
                 image_paths.append(image_path)
-                with Image.open(out_image_path) as image:
-                    size = image.size
-                    image_sizes.append(size)
-                    image_max_side = max(image_max_side, *size)
+                image_size = get_png_size(out_image_path)
+                image_sizes.append(image_size)
+                image_max_side = max(image_max_side, *image_size)
 
             scale = min(1.0, THUMBNAIL_SIZE / image_max_side)
 

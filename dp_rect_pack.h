@@ -2,7 +2,7 @@
  * Rectangle packing library.
  * v1.0.0
  *
- * Copyright (c) 2017 Daniel Plakhotich
+ * Copyright (c) 2017-2018 Daniel Plakhotich
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages

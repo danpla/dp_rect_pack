@@ -147,6 +147,9 @@ void BitmapCanvas::strokeRect(const Rect& rect, std::uint8_t colorIdx)
 {
     auto* dst = &data[rect.y * w + rect.x];
     std::memset(dst, colorIdx, rect.w);
+    if (rect.h == 1)
+        return;
+
     dst += w;
 
     for (int i = 0; i < rect.h - 2; ++ i) {

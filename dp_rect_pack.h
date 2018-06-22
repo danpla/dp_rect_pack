@@ -30,6 +30,11 @@
 #include <vector>
 
 
+#define DP_RECT_PACK_VERSION_MAJOR 1
+#define DP_RECT_PACK_VERSION_MINOR 0
+#define DP_RECT_PACK_VERSION_PATCH 0
+
+
 namespace dp {
 namespace rect_pack {
 

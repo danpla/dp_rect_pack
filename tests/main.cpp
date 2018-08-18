@@ -405,6 +405,100 @@ static void testInsert()
         assert(w == 10);
         assert(h == 15);
     }
+
+    // Grow down nodes insertion/visit order
+    {
+        PT packer(5, 3);
+
+        PT::InsertResult result = packer.insert(5, 1);
+        assert(result.status == InsertStatus::ok);
+        assert(result.pos.x == 0);
+        assert(result.pos.y == 0);
+        assert(result.pageIndex == 0);
+        assert(packer.getNumPages() == 1);
+
+        result = packer.insert(4, 1);
+        assert(result.status == InsertStatus::ok);
+        assert(result.pos.x == 0);
+        assert(result.pos.y == 1);
+        assert(result.pageIndex == 0);
+        assert(packer.getNumPages() == 1);
+
+        result = packer.insert(3, 1);
+        assert(result.status == InsertStatus::ok);
+        assert(result.pos.x == 0);
+        assert(result.pos.y == 2);
+        assert(result.pageIndex == 0);
+        assert(packer.getNumPages() == 1);
+
+        result = packer.insert(1, 1);
+        assert(result.status == InsertStatus::ok);
+        assert(result.pos.x == 4);
+        assert(result.pos.y == 1);
+        assert(result.pageIndex == 0);
+        assert(packer.getNumPages() == 1);
+
+        result = packer.insert(1, 1);
+        assert(result.status == InsertStatus::ok);
+        assert(result.pos.x == 3);
+        assert(result.pos.y == 2);
+        assert(result.pageIndex == 0);
+        assert(packer.getNumPages() == 1);
+
+        result = packer.insert(1, 1);
+        assert(result.status == InsertStatus::ok);
+        assert(result.pos.x == 4);
+        assert(result.pos.y == 2);
+        assert(result.pageIndex == 0);
+        assert(packer.getNumPages() == 1);
+    }
+
+    // Grow right nodes insertion/visit order
+    {
+        PT packer(3, 5);
+
+        PT::InsertResult result = packer.insert(1, 5);
+        assert(result.status == InsertStatus::ok);
+        assert(result.pos.x == 0);
+        assert(result.pos.y == 0);
+        assert(result.pageIndex == 0);
+        assert(packer.getNumPages() == 1);
+
+        result = packer.insert(1, 4);
+        assert(result.status == InsertStatus::ok);
+        assert(result.pos.x == 1);
+        assert(result.pos.y == 0);
+        assert(result.pageIndex == 0);
+        assert(packer.getNumPages() == 1);
+
+        result = packer.insert(1, 3);
+        assert(result.status == InsertStatus::ok);
+        assert(result.pos.x == 2);
+        assert(result.pos.y == 0);
+        assert(result.pageIndex == 0);
+        assert(packer.getNumPages() == 1);
+
+        result = packer.insert(1, 1);
+        assert(result.status == InsertStatus::ok);
+        assert(result.pos.x == 2);
+        assert(result.pos.y == 3);
+        assert(result.pageIndex == 0);
+        assert(packer.getNumPages() == 1);
+
+        result = packer.insert(1, 1);
+        assert(result.status == InsertStatus::ok);
+        assert(result.pos.x == 2);
+        assert(result.pos.y == 4);
+        assert(result.pageIndex == 0);
+        assert(packer.getNumPages() == 1);
+
+        result = packer.insert(1, 1);
+        assert(result.status == InsertStatus::ok);
+        assert(result.pos.x == 1);
+        assert(result.pos.y == 4);
+        assert(result.pageIndex == 0);
+        assert(packer.getNumPages() == 1);
+    }
 }
 
 

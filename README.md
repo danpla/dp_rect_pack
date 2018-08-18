@@ -8,7 +8,6 @@
 *   Multipage and infinite single page modes
 *   Custom page padding and spacing between rectangles
 *   Type agnostic
-*   Ability to configure to minimize memory usage
 *   zlib license
 
 

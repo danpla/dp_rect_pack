@@ -21,10 +21,10 @@
  * 3. This notice may not be removed or altered from any source distribution.
  */
 
+
 #ifndef DP_RECT_PACK_H
 #define DP_RECT_PACK_H
 
-#include <algorithm>
 #include <cassert>
 #include <cstddef>
 #include <vector>
@@ -65,13 +65,19 @@ struct InsertStatus {
 };
 
 
+// A note on the implementation.
+// The current algorithm is absolutely the same as in version 1.0.0,
+// except that we only keep the leaf nodes of the binary tree. This
+// dramatically improves performance and reduces memory usage, but
+// growDown() and growRight() methods are harder to understand
+// because the leafs insertion order depends on several layers of
+// parent branches that don't physically exist. I added comments to
+// help you visualize what happens, but it will probably be easier
+// to just look at the code of the version 1.0.0.
+
+
 /**
  * Rectangle packer.
- *
- * Internally, RectPacker works with a binary tree where each node
- * consists of two GeomT and two IndexT fields. Thus, if you know your
- * data, it's possible to carefully choose GeomT and IndexT to minimize
- * the memory usage.
  *
  * GeomT is not required to hold negative numbers, and thus can be
  * an unsigned integer. It's also possible to use a floating-point
@@ -82,14 +88,9 @@ struct InsertStatus {
  *     * Addition and subtraction (including compound assignment)
  *     * Comparison
  *
- * For the worst case, IndexT should be able to hold an integer in
- * range [0..N * 2], where N is the total number of rectangles you
- * plan to pack.
- *
  * \tparam GeomT numeric type to use for geometry
- * \tparam IndexT integral type to use internally for node indices
  */
-template<typename GeomT = int, typename IndexT = unsigned>
+template<typename GeomT = int>
 class RectPacker {
 public:
     struct Spacing {
@@ -137,6 +138,16 @@ public:
     struct Position {
         GeomT x;
         GeomT y;
+
+        Position()
+            : x()
+            , y()
+        {}
+
+        Position(GeomT x, GeomT y)
+            : x(x)
+            , y(y)
+        {}
     };
 
     /**
@@ -145,6 +156,7 @@ public:
     struct InsertResult {
         /**
          * Status of the insertion.
+         *
          * \warning If InsertResult.status is not InsertStatus::ok,
          *     values of all other fields of InsertResult are undefined.
          */
@@ -265,64 +277,53 @@ private:
     class Context;
     class Page {
     public:
-        struct StackState {
-            IndexT nodeIdx;
-            Position pos;
-        };
-
-        typedef std::vector<StackState> NodeStack;
-
         Page()
-            : nodes(1, Node(0, 0))
-            , rootIdx(0)
+            : nodes()
+            , rootSize(0, 0)
+            , growDownRootBootomIdx(0)
         {}
 
         Size getSize(const Context& ctx) const
         {
-            Size size = nodes[rootIdx].size;
-            size.w += ctx.padding.left + ctx.padding.right;
-            size.h += ctx.padding.top + ctx.padding.bottom;
-            return size;
+            return Size(
+                ctx.padding.left + rootSize.w + ctx.padding.right,
+                ctx.padding.top + rootSize.h + ctx.padding.bottom);
         }
 
         bool insert(Context& ctx, const Size& rect, Position& pos);
     private:
         struct Node {
+            Position pos;
             Size size;
-            IndexT rightIdx;
-            IndexT bottomIdx;
 
-            Node(GeomT w, GeomT h, IndexT rightIdx = 1, IndexT bottomIdx = 1)
-                : size(w, h)
-                , rightIdx(rightIdx)
-                , bottomIdx(bottomIdx)
+            Node(GeomT x, GeomT y, GeomT w, GeomT h)
+                : pos(x, y)
+                , size(w, h)
             {}
-
-            bool isEmpty() const
-            {
-                return rightIdx == 1 && bottomIdx == 1;
-            }
         };
 
+        // Leaf nodes of the binary tree in depth-first order
         std::vector<Node> nodes;
-        IndexT rootIdx;
+        Size rootSize;
+        // The index of the first leaf bottom node of the new root
+        // created in growDown(). See the method for more details.
+        std::size_t growDownRootBootomIdx;
 
         bool tryInsert(Context& ctx, const Size& rect, Position& pos);
         bool findNode(
-            Context& ctx, const Size& rect,
-            IndexT& nodeIdx, Position& pos) const;
+            const Size& rect,
+            std::size_t& nodeIdx, Position& pos) const;
         void subdivideNode(
-            Context& ctx, IndexT nodeIdx, const Size& rect);
+            Context& ctx, std::size_t nodeIdx, const Size& rect);
         bool tryGrow(Context& ctx, const Size& rect, Position& pos);
-        void growDown(Context& ctx, const Size& rect);
-        void growRight(Context& ctx, const Size& rect);
+        void growDown(Context& ctx, const Size& rect, Position& pos);
+        void growRight(Context& ctx, const Size& rect, Position& pos);
     };
 
     struct Context {
         Size maxSize;
         Spacing spacing;
         Padding padding;
-        typename Page::NodeStack stack;
 
         Context(
             GeomT maxPageWidth, GeomT maxPageHeight,
@@ -334,9 +335,9 @@ private:
 };
 
 
-template<typename GeomT, typename IndexT>
-typename RectPacker<GeomT, IndexT>::InsertResult
-RectPacker<GeomT, IndexT>::insert(GeomT width, GeomT height)
+template<typename GeomT>
+typename RectPacker<GeomT>::InsertResult
+RectPacker<GeomT>::insert(GeomT width, GeomT height)
 {
     InsertResult result;
 
@@ -374,8 +375,8 @@ RectPacker<GeomT, IndexT>::insert(GeomT width, GeomT height)
 }
 
 
-template<typename GeomT, typename IndexT>
-bool RectPacker<GeomT, IndexT>::Page::insert(
+template<typename GeomT>
+bool RectPacker<GeomT>::Page::insert(
     Context& ctx, const Size& rect, Position& pos)
 {
     assert(rect.w > 0);
@@ -383,16 +384,14 @@ bool RectPacker<GeomT, IndexT>::Page::insert(
     assert(rect.h > 0);
     assert(rect.h <= ctx.maxSize.h);
 
-    Node& root = nodes[0];
-    if (root.size.w == 0) {
-        assert(nodes.size() == 1);
-
-        root.size = rect;
-        root.rightIdx = 0;
-        root.bottomIdx = 0;
-
+    // The first insertion should be handled especially since
+    // growRight() and growDown() add spacing between the root
+    // and the inserted rectangle.
+    if (rootSize.w == 0) {
+        rootSize = rect;
         pos.x = ctx.padding.left;
         pos.y = ctx.padding.top;
+
         return true;
     }
 
@@ -400,12 +399,12 @@ bool RectPacker<GeomT, IndexT>::Page::insert(
 }
 
 
-template<typename GeomT, typename IndexT>
-bool RectPacker<GeomT, IndexT>::Page::tryInsert(
+template<typename GeomT>
+bool RectPacker<GeomT>::Page::tryInsert(
     Context& ctx, const Size& rect, Position& pos)
 {
-    IndexT nodeIdx;
-    if (findNode(ctx, rect, nodeIdx, pos)) {
+    std::size_t nodeIdx;
+    if (findNode(rect, nodeIdx, pos)) {
         subdivideNode(ctx, nodeIdx, rect);
         return true;
     }
@@ -414,56 +413,19 @@ bool RectPacker<GeomT, IndexT>::Page::tryInsert(
 }
 
 
-template<typename GeomT, typename IndexT>
-bool RectPacker<GeomT, IndexT>::Page::findNode(
-    Context& ctx, const Size& rect, IndexT& nodeIdx, Position& pos) const
+template<typename GeomT>
+bool RectPacker<GeomT>::Page::findNode(
+    const Size& rect, std::size_t& nodeIdx, Position& pos) const
 {
-    assert(ctx.stack.empty());
-
-    pos.x = ctx.padding.left;
-    pos.y = ctx.padding.top;
-    nodeIdx = rootIdx;
-
-    while (true) {
+    for (nodeIdx = 0; nodeIdx < nodes.size(); ++nodeIdx) {
         const Node& node = nodes[nodeIdx];
-
         if (rect.w <= node.size.w && rect.h <= node.size.h) {
-            if (node.isEmpty()) {
-                ctx.stack.clear();
-                return true;
-            } else if (node.rightIdx != 0) {
-                if (node.bottomIdx != 0) {
-                    StackState state = {
-                        node.bottomIdx,
-                        {
-                            pos.x,
-                            GeomT(
-                                pos.y + node.size.h
-                                - nodes[node.bottomIdx].size.h)
-                        }
-                    };
-                    ctx.stack.push_back(state);
-                }
-
-                nodeIdx = node.rightIdx;
-                pos.x += node.size.w - nodes[node.rightIdx].size.w;
-                continue;
-            } else if (node.bottomIdx != 0) {
-                nodeIdx = node.bottomIdx;
-                pos.y += node.size.h - nodes[node.bottomIdx].size.h;
-                continue;
-            }
-        }
-
-        if (ctx.stack.empty())
-            return false;
-        else {
-            const StackState& state = ctx.stack.back();
-            nodeIdx = state.nodeIdx;
-            pos = state.pos;
-            ctx.stack.pop_back();
+            pos = node.pos;
+            return true;
         }
     }
+
+    return false;
 }
 
 
@@ -481,71 +443,80 @@ bool RectPacker<GeomT, IndexT>::Page::findNode(
  *  |       |
  *  +-------+
  */
-template<typename GeomT, typename IndexT>
-void RectPacker<GeomT, IndexT>::Page::subdivideNode(
-    Context& ctx, IndexT nodeIdx, const Size& rect)
+template<typename GeomT>
+void RectPacker<GeomT>::Page::subdivideNode(
+    Context& ctx, std::size_t nodeIdx, const Size& rect)
 {
     assert(nodeIdx < nodes.size());
-    assert(nodes[nodeIdx].isEmpty());
 
-    // We insert the nodes in the same order findNode() will visit them.
+    Node& node = nodes[nodeIdx];
 
-    {
-        Node& node = nodes[nodeIdx];
-        assert(node.size.w >= rect.w);
-        const GeomT rightW = node.size.w - rect.w;
-        if (rightW > ctx.spacing.x) {
-            node.rightIdx = nodes.size();
-            nodes.push_back(Node(rightW - ctx.spacing.x, rect.h));
-        } else
-            node.rightIdx = 0;
-    }
+    assert(node.size.w >= rect.w);
+    const GeomT rightW = node.size.w - rect.w;
+    const bool hasSpaceRight = rightW > ctx.spacing.x;
+    assert(node.size.h >= rect.h);
+    const GeomT bottomH = node.size.h - rect.h;
+    const bool hasSpaceBelow = bottomH > ctx.spacing.y;
 
-    {
-        Node& node = nodes[nodeIdx];
-        assert(node.size.h >= rect.h);
-        const GeomT bottomH = node.size.h - rect.h;
-        if (bottomH > ctx.spacing.y) {
-            node.bottomIdx = nodes.size();
-            nodes.push_back(Node(node.size.w, bottomH - ctx.spacing.y));
-        } else
-            node.bottomIdx = 0;
+    if (hasSpaceRight) {
+        // Right node replaces the current
+
+        const GeomT bottomX = node.pos.x;
+        const GeomT bottomW = node.size.w;
+
+        node.pos.x += rect.w + ctx.spacing.x;
+        node.size.w = rightW - ctx.spacing.x;
+        node.size.h = rect.h;
+
+        if (hasSpaceBelow) {
+            nodes.insert(
+                nodes.begin() + nodeIdx + 1,
+                Node(
+                    bottomX,
+                    node.pos.y + rect.h + ctx.spacing.y,
+                    bottomW,
+                    bottomH - ctx.spacing.y));
+
+            if (nodeIdx <= growDownRootBootomIdx)
+                ++growDownRootBootomIdx;
+        }
+    } else if (hasSpaceBelow) {
+        // Bottom node replaces the current
+        node.pos.y += rect.h + ctx.spacing.y;
+        node.size.h = bottomH - ctx.spacing.y;
+    } else {
+        nodes.erase(nodes.begin() + nodeIdx);
+        if (nodeIdx < growDownRootBootomIdx)
+            --growDownRootBootomIdx;
     }
 }
 
 
-template<typename GeomT, typename IndexT>
-bool RectPacker<GeomT, IndexT>::Page::tryGrow(
+template<typename GeomT>
+bool RectPacker<GeomT>::Page::tryGrow(
     Context& ctx, const Size& rect, Position& pos)
 {
-    assert(rootIdx < nodes.size());
-    const Node& root = nodes[rootIdx];
-
-    assert(ctx.maxSize.w >= root.size.w);
-    const GeomT freeW = ctx.maxSize.w - root.size.w;
-    assert(ctx.maxSize.h >= root.size.h);
-    const GeomT freeH = ctx.maxSize.h - root.size.h;
+    assert(ctx.maxSize.w >= rootSize.w);
+    const GeomT freeW = ctx.maxSize.w - rootSize.w;
+    assert(ctx.maxSize.h >= rootSize.h);
+    const GeomT freeH = ctx.maxSize.h - rootSize.h;
 
     const bool canGrowDown = (
         freeH >= rect.h && freeH - rect.h >= ctx.spacing.y);
     const bool mustGrowDown = (
         canGrowDown
         && freeW >= ctx.spacing.x
-        && (root.size.w + ctx.spacing.x
-            >= root.size.h + rect.h + ctx.spacing.y));
+        && (rootSize.w + ctx.spacing.x
+            >= rootSize.h + rect.h + ctx.spacing.y));
     if (mustGrowDown) {
-        pos.x = ctx.padding.left;
-        pos.y = ctx.padding.top + root.size.h + ctx.spacing.y;
-        growDown(ctx, rect);
+        growDown(ctx, rect, pos);
         return true;
     }
 
     const bool canGrowRight = (
         freeW >= rect.w && freeW - rect.w >= ctx.spacing.x);
     if (canGrowRight) {
-        pos.x = ctx.padding.left + root.size.w + ctx.spacing.x;
-        pos.y = ctx.padding.top;
-        growRight(ctx, rect);
+        growRight(ctx, rect, pos);
         return true;
     }
 
@@ -553,84 +524,106 @@ bool RectPacker<GeomT, IndexT>::Page::tryGrow(
 }
 
 
-template<typename GeomT, typename IndexT>
-void RectPacker<GeomT, IndexT>::Page::growDown(Context& ctx, const Size& rect)
+template<typename GeomT>
+void RectPacker<GeomT>::Page::growDown(
+    Context& ctx, const Size& rect, Position& pos)
 {
-    std::size_t nextIdx = nodes.size();
-    const std::size_t newRootIdx = nextIdx++;
-
-    assert(rootIdx < nodes.size());
-    const Size rootSize = nodes[rootIdx].size;
     assert(ctx.maxSize.h > rootSize.h);
     assert(ctx.maxSize.h - rootSize.h >= rect.h);
     assert(ctx.maxSize.h - rootSize.h - rect.h >= ctx.spacing.y);
 
-    const GeomT newRootW = std::max(rootSize.w, rect.w);
-    nodes.push_back(
-        Node(newRootW, rootSize.h + rect.h + ctx.spacing.y, rootIdx, 0));
+    pos.x = ctx.padding.left;
+    pos.y = ctx.padding.top + rootSize.h + ctx.spacing.y;
 
-    if (rootSize.w < newRootW && newRootW - rootSize.w > ctx.spacing.x) {
-        nodes.back().rightIdx = nextIdx++;
-        nodes.push_back(Node(newRootW, rootSize.h, nextIdx++, rootIdx));
-        nodes.push_back(
-            Node(newRootW - rootSize.w - ctx.spacing.x, rootSize.h));
+    if (rootSize.w < rect.w) {
+        if (rect.w - rootSize.w > ctx.spacing.x) {
+            // The auxiliary node becomes the right child of the new
+            // root. It contains the current root (bottom child) and
+            // free space at the current root's right (right child).
+            nodes.insert(
+                nodes.begin(),
+                Node(
+                    ctx.padding.left + rootSize.w + ctx.spacing.x,
+                    ctx.padding.top,
+                    rect.w - rootSize.w - ctx.spacing.x,
+                    rootSize.h));
+            ++growDownRootBootomIdx;
+        }
+
+        rootSize.w = rect.w;
+    } else if (rootSize.w - rect.w > ctx.spacing.x) {
+        // Free space at the right of the inserted rect becomes the
+        // right child of the rect's node, which in turn is the
+        // bottom child of the new root.
+        nodes.insert(
+            nodes.begin() + growDownRootBootomIdx,
+            Node(
+                pos.x + rect.w + ctx.spacing.x,
+                pos.y,
+                rootSize.w - rect.w - ctx.spacing.x,
+                rect.h));
+
+        // The inserted node is visited before the node from the next
+        // growDown() since the current new root will be the right
+        // child of the next root.
+        ++growDownRootBootomIdx;
     }
 
-    nodes[newRootIdx].bottomIdx = nextIdx++;
-    nodes.push_back(Node(newRootW, rect.h, 0, 0));
-
-    if (rect.w < newRootW && newRootW - rect.w > ctx.spacing.x) {
-        nodes.back().rightIdx = nextIdx++;
-        nodes.push_back(Node(newRootW - rect.w - ctx.spacing.x, rect.h));
-    }
-
-    rootIdx = newRootIdx;
+    rootSize.h += ctx.spacing.y + rect.h;
 }
 
 
-template<typename GeomT, typename IndexT>
-void RectPacker<GeomT, IndexT>::Page::growRight(Context& ctx, const Size& rect)
+template<typename GeomT>
+void RectPacker<GeomT>::Page::growRight(
+    Context& ctx, const Size& rect, Position& pos)
 {
-    std::size_t nextIdx = nodes.size();
-    const std::size_t newRootIdx = nextIdx++;
-
-    assert(rootIdx < nodes.size());
-    const Size rootSize = nodes[rootIdx].size;
     assert(ctx.maxSize.w > rootSize.w);
     assert(ctx.maxSize.w - rootSize.w >= rect.w);
     assert(ctx.maxSize.w - rootSize.w - rect.w >= ctx.spacing.x);
 
-    const GeomT newRootH = std::max(rootSize.h, rect.h);
-    nodes.push_back(
-        Node(rootSize.w + rect.w + ctx.spacing.x, newRootH, 0, rootIdx));
+    pos.x = ctx.padding.left + rootSize.w + ctx.spacing.x;
+    pos.y = ctx.padding.top;
 
-    if (rootSize.h < newRootH && newRootH - rootSize.h > ctx.spacing.y) {
-        nodes.back().bottomIdx = nextIdx++;
-        nodes.push_back(Node(rootSize.w, newRootH, rootIdx, nextIdx++));
-        nodes.push_back(
-            Node(rootSize.w, newRootH - rootSize.h - ctx.spacing.y));
+    if (rootSize.h < rect.h) {
+        if (rect.h - rootSize.h > ctx.spacing.y)
+            // The auxiliary node becomes the bottom child of the
+            // new root. It contains the current root (right child)
+            // and free space at the current root's bottom, if any
+            // (bottom child).
+            nodes.insert(
+                nodes.end(),
+                Node(
+                    ctx.padding.left,
+                    ctx.padding.top + rootSize.h + ctx.spacing.y,
+                    rootSize.w,
+                    rect.h - rootSize.h - ctx.spacing.y));
+
+        rootSize.h = rect.h;
+    } else if (rootSize.h - rect.h > ctx.spacing.y) {
+        // Free space at the bottom of the inserted rect becomes the
+        // bottom child of the rect's node, which in turn is the
+        // right child of the new root node.
+        nodes.insert(
+            nodes.begin(),
+            Node(
+                pos.x,
+                pos.y + rect.h + ctx.spacing.y,
+                rect.w,
+                rootSize.h - rect.h - ctx.spacing.y));
+        ++growDownRootBootomIdx;
     }
 
-    nodes[newRootIdx].rightIdx = nextIdx++;
-    nodes.push_back(Node(rect.w, newRootH, 0, 0));
-
-    if (rect.h < newRootH && newRootH - rect.h > ctx.spacing.y) {
-        nodes.back().bottomIdx = nextIdx++;
-        nodes.push_back(Node(rect.w, newRootH - rect.h - ctx.spacing.y));
-    }
-
-    rootIdx = newRootIdx;
+    rootSize.w += ctx.spacing.x + rect.w;
 }
 
 
-template<typename GeomT, typename IndexT>
-RectPacker<GeomT, IndexT>::Context::Context(
+template<typename GeomT>
+RectPacker<GeomT>::Context::Context(
     GeomT maxPageWidth, GeomT maxPageHeight,
     const Spacing& rectsSpacing, const Padding& pagePadding)
         : maxSize(maxPageWidth, maxPageHeight)
         , spacing(rectsSpacing)
         , padding(pagePadding)
-        , stack()
 {
     if (maxSize.w < 0)
         maxSize.w = 0;

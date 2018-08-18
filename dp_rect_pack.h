@@ -1,6 +1,6 @@
 /*
  * Rectangle packing library.
- * v1.0.0
+ * v1.1.0
  *
  * Copyright (c) 2017-2018 Daniel Plakhotich
  *
@@ -31,7 +31,7 @@
 
 
 #define DP_RECT_PACK_VERSION_MAJOR 1
-#define DP_RECT_PACK_VERSION_MINOR 0
+#define DP_RECT_PACK_VERSION_MINOR 1
 #define DP_RECT_PACK_VERSION_PATCH 0
 
 

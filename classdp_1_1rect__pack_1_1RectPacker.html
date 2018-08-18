@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>dp_rect_pack: dp::rect_pack::RectPacker&lt; GeomT, IndexT &gt; Class Template Reference</title>
+<title>dp_rect_pack: dp::rect_pack::RectPacker&lt; GeomT &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -48,7 +48,7 @@ $(function() {
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classdp_1_1rect__pack_1_1RectPacker-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">dp::rect_pack::RectPacker&lt; GeomT, IndexT &gt; Class Template Reference</div>  </div>
+<div class="title">dp::rect_pack::RectPacker&lt; GeomT &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -60,7 +60,7 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdp_1_1rect__pack_1_1RectPacker_1_1InsertResult.html">InsertResult</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Result returned by <a class="el" href="classdp_1_1rect__pack_1_1RectPacker.html#a2352dfe473dfb335dd268a889c3fce9d" title="Insert a rectangle. ">RectPacker::insert()</a>.  <a href="structdp_1_1rect__pack_1_1RectPacker_1_1InsertResult.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Result returned by <a class="el" href="classdp_1_1rect__pack_1_1RectPacker.html#af9d44d86b6087569a2deff88a124c5cd" title="Insert a rectangle. ">RectPacker::insert()</a>.  <a href="structdp_1_1rect__pack_1_1RectPacker_1_1InsertResult.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdp_1_1rect__pack_1_1RectPacker_1_1Padding.html">Padding</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -71,53 +71,50 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a77a898b32741d975fff5c6a04a9a9120"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdp_1_1rect__pack_1_1RectPacker.html#a77a898b32741d975fff5c6a04a9a9120">RectPacker</a> (GeomT maxPageWidth, GeomT maxPageHeight, const <a class="el" href="structdp_1_1rect__pack_1_1RectPacker_1_1Spacing.html">Spacing</a> &amp;rectsSpacing=<a class="el" href="structdp_1_1rect__pack_1_1RectPacker_1_1Spacing.html">Spacing</a>(0), const <a class="el" href="structdp_1_1rect__pack_1_1RectPacker_1_1Padding.html">Padding</a> &amp;pagePadding=<a class="el" href="structdp_1_1rect__pack_1_1RectPacker_1_1Padding.html">Padding</a>(0))</td></tr>
-<tr class="memdesc:a77a898b32741d975fff5c6a04a9a9120"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classdp_1_1rect__pack_1_1RectPacker.html" title="Rectangle packer. ">RectPacker</a> constructor.  <a href="#a77a898b32741d975fff5c6a04a9a9120">More...</a><br /></td></tr>
-<tr class="separator:a77a898b32741d975fff5c6a04a9a9120"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a94994e6772887e48b7e4b4bd18519535"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdp_1_1rect__pack_1_1RectPacker.html#a94994e6772887e48b7e4b4bd18519535">getNumPages</a> () const</td></tr>
-<tr class="memdesc:a94994e6772887e48b7e4b4bd18519535"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the current number of pages.  <a href="#a94994e6772887e48b7e4b4bd18519535">More...</a><br /></td></tr>
-<tr class="separator:a94994e6772887e48b7e4b4bd18519535"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a417b119fa15abb669c5dfde159109a84"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdp_1_1rect__pack_1_1RectPacker.html#a417b119fa15abb669c5dfde159109a84">getPageSize</a> (std::size_t pageIndex, GeomT &amp;width, GeomT &amp;height) const</td></tr>
-<tr class="memdesc:a417b119fa15abb669c5dfde159109a84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the current size of the page.  <a href="#a417b119fa15abb669c5dfde159109a84">More...</a><br /></td></tr>
-<tr class="separator:a417b119fa15abb669c5dfde159109a84"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2352dfe473dfb335dd268a889c3fce9d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structdp_1_1rect__pack_1_1RectPacker_1_1InsertResult.html">InsertResult</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdp_1_1rect__pack_1_1RectPacker.html#a2352dfe473dfb335dd268a889c3fce9d">insert</a> (GeomT width, GeomT height)</td></tr>
-<tr class="memdesc:a2352dfe473dfb335dd268a889c3fce9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert a rectangle.  <a href="#a2352dfe473dfb335dd268a889c3fce9d">More...</a><br /></td></tr>
-<tr class="separator:a2352dfe473dfb335dd268a889c3fce9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6a40fb3f2e4ae81e8754da7e3933488"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdp_1_1rect__pack_1_1RectPacker.html#aa6a40fb3f2e4ae81e8754da7e3933488">RectPacker</a> (GeomT maxPageWidth, GeomT maxPageHeight, const <a class="el" href="structdp_1_1rect__pack_1_1RectPacker_1_1Spacing.html">Spacing</a> &amp;rectsSpacing=<a class="el" href="structdp_1_1rect__pack_1_1RectPacker_1_1Spacing.html">Spacing</a>(0), const <a class="el" href="structdp_1_1rect__pack_1_1RectPacker_1_1Padding.html">Padding</a> &amp;pagePadding=<a class="el" href="structdp_1_1rect__pack_1_1RectPacker_1_1Padding.html">Padding</a>(0))</td></tr>
+<tr class="memdesc:aa6a40fb3f2e4ae81e8754da7e3933488"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classdp_1_1rect__pack_1_1RectPacker.html" title="Rectangle packer. ">RectPacker</a> constructor.  <a href="#aa6a40fb3f2e4ae81e8754da7e3933488">More...</a><br /></td></tr>
+<tr class="separator:aa6a40fb3f2e4ae81e8754da7e3933488"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b5637c302518ffc97e6fe374b133850"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdp_1_1rect__pack_1_1RectPacker.html#a2b5637c302518ffc97e6fe374b133850">getNumPages</a> () const</td></tr>
+<tr class="memdesc:a2b5637c302518ffc97e6fe374b133850"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the current number of pages.  <a href="#a2b5637c302518ffc97e6fe374b133850">More...</a><br /></td></tr>
+<tr class="separator:a2b5637c302518ffc97e6fe374b133850"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc3e832bdf1eaaf01d1629e6b27f8332"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdp_1_1rect__pack_1_1RectPacker.html#adc3e832bdf1eaaf01d1629e6b27f8332">getPageSize</a> (std::size_t pageIndex, GeomT &amp;width, GeomT &amp;height) const</td></tr>
+<tr class="memdesc:adc3e832bdf1eaaf01d1629e6b27f8332"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the current size of the page.  <a href="#adc3e832bdf1eaaf01d1629e6b27f8332">More...</a><br /></td></tr>
+<tr class="separator:adc3e832bdf1eaaf01d1629e6b27f8332"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9d44d86b6087569a2deff88a124c5cd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structdp_1_1rect__pack_1_1RectPacker_1_1InsertResult.html">InsertResult</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdp_1_1rect__pack_1_1RectPacker.html#af9d44d86b6087569a2deff88a124c5cd">insert</a> (GeomT width, GeomT height)</td></tr>
+<tr class="memdesc:af9d44d86b6087569a2deff88a124c5cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert a rectangle.  <a href="#af9d44d86b6087569a2deff88a124c5cd">More...</a><br /></td></tr>
+<tr class="separator:af9d44d86b6087569a2deff88a124c5cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;typename GeomT = int, typename IndexT = unsigned&gt;<br />
-class dp::rect_pack::RectPacker&lt; GeomT, IndexT &gt;</h3>
+<div class="textblock"><h3>template&lt;typename GeomT = int&gt;<br />
+class dp::rect_pack::RectPacker&lt; GeomT &gt;</h3>
 
 <p>Rectangle packer. </p>
-<p>Internally, <a class="el" href="classdp_1_1rect__pack_1_1RectPacker.html" title="Rectangle packer. ">RectPacker</a> works with a binary tree where each node consists of two GeomT and two IndexT fields. Thus, if you know your data, it's possible to carefully choose GeomT and IndexT to minimize the memory usage.</p>
 <p>GeomT is not required to hold negative numbers, and thus can be an unsigned integer. It's also possible to use a floating-point or a custom numeric type.</p>
 <p>A custom type for GeomT should support:</p><ul>
 <li>Implicit construction from an integer &gt;= 0</li>
 <li>Addition and subtraction (including compound assignment)</li>
 <li>Comparison</li>
 </ul>
-<p>For the worst case, IndexT should be able to hold an integer in range [0..N * 2], where N is the total number rectangles you plan to pack.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">GeomT</td><td>numeric type to use for geometry </td></tr>
-    <tr><td class="paramname">IndexT</td><td>integral type to use internally for node indices </td></tr>
   </table>
   </dd>
 </dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a77a898b32741d975fff5c6a04a9a9120"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a77a898b32741d975fff5c6a04a9a9120">&#9670;&nbsp;</a></span>RectPacker()</h2>
+<a id="aa6a40fb3f2e4ae81e8754da7e3933488"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6a40fb3f2e4ae81e8754da7e3933488">&#9670;&nbsp;</a></span>RectPacker()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename GeomT  = int, typename IndexT  = unsigned&gt; </div>
+template&lt;typename GeomT  = int&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classdp_1_1rect__pack_1_1RectPacker.html">dp::rect_pack::RectPacker</a>&lt; GeomT, IndexT &gt;::<a class="el" href="classdp_1_1rect__pack_1_1RectPacker.html">RectPacker</a> </td>
+          <td class="memname"><a class="el" href="classdp_1_1rect__pack_1_1RectPacker.html">dp::rect_pack::RectPacker</a>&lt; GeomT &gt;::<a class="el" href="classdp_1_1rect__pack_1_1RectPacker.html">RectPacker</a> </td>
           <td>(</td>
           <td class="paramtype">GeomT&#160;</td>
           <td class="paramname"><em>maxPageWidth</em>, </td>
@@ -159,13 +156,13 @@ template&lt;typename GeomT  = int, typename IndexT  = unsigned&gt; </div>
 <li>If GeomT has a physical limit (like any standard integer), you can set the maximum size to the maximum positive value GeomT can hold.</li>
 <li>Otherwise, if GeomT is a floating-point type or a custom unbounded type, you can set the maximum size to a huge value or, if supported by the type, a magic value that always bigger than any finite number (like a positive infinity for floating-point types).</li>
 </ul>
-<p>If GeomT can hold negative values, the maximum page size, spacing, and padding will be clamped to 0. Keep in mind that if the maximum page size is 0, or if the total padding greater or equal to the maximum page size, pages will have no free space for rectangles, and all calls to <a class="el" href="classdp_1_1rect__pack_1_1RectPacker.html#a2352dfe473dfb335dd268a889c3fce9d" title="Insert a rectangle. ">insert()</a> will result in <a class="el" href="structdp_1_1rect__pack_1_1InsertStatus.html#a2a667e5e3b5309d73eb9e6bcb612e427afe0c19976c441bbabfa436579de87d81" title="Rectangle is too big to fit in a single page. ">InsertStatus::rectTooBig</a>.</p>
+<p>If GeomT can hold negative values, the maximum page size, spacing, and padding will be clamped to 0. Keep in mind that if the maximum page size is 0, or if the total padding greater or equal to the maximum page size, pages will have no free space for rectangles, and all calls to <a class="el" href="classdp_1_1rect__pack_1_1RectPacker.html#af9d44d86b6087569a2deff88a124c5cd" title="Insert a rectangle. ">insert()</a> will result in <a class="el" href="structdp_1_1rect__pack_1_1InsertStatus.html#a2a667e5e3b5309d73eb9e6bcb612e427afe0c19976c441bbabfa436579de87d81" title="Rectangle is too big to fit in a single page. ">InsertStatus::rectTooBig</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">maxPageWidth</td><td>maximum width of the page, including the horizontal padding </td></tr>
-    <tr><td class="paramname">maxPageHeight</td><td>maximum height of the page, including the vertical padding </td></tr>
+    <tr><td class="paramname">maxPageWidth</td><td>maximum width of a page, including the horizontal padding </td></tr>
+    <tr><td class="paramname">maxPageHeight</td><td>maximum height of a page, including the vertical padding </td></tr>
     <tr><td class="paramname">rectsSpacing</td><td>space between rectangles </td></tr>
-    <tr><td class="paramname">pagePadding</td><td>space between rectangles and an edge of a page </td></tr>
+    <tr><td class="paramname">pagePadding</td><td>space between rectangles and edges of a page </td></tr>
   </table>
   </dd>
 </dl>
@@ -173,19 +170,19 @@ template&lt;typename GeomT  = int, typename IndexT  = unsigned&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a94994e6772887e48b7e4b4bd18519535"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a94994e6772887e48b7e4b4bd18519535">&#9670;&nbsp;</a></span>getNumPages()</h2>
+<a id="a2b5637c302518ffc97e6fe374b133850"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b5637c302518ffc97e6fe374b133850">&#9670;&nbsp;</a></span>getNumPages()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename GeomT  = int, typename IndexT  = unsigned&gt; </div>
+template&lt;typename GeomT  = int&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::size_t <a class="el" href="classdp_1_1rect__pack_1_1RectPacker.html">dp::rect_pack::RectPacker</a>&lt; GeomT, IndexT &gt;::getNumPages </td>
+          <td class="memname">std::size_t <a class="el" href="classdp_1_1rect__pack_1_1RectPacker.html">dp::rect_pack::RectPacker</a>&lt; GeomT &gt;::getNumPages </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -203,19 +200,19 @@ template&lt;typename GeomT  = int, typename IndexT  = unsigned&gt; </div>
 
 </div>
 </div>
-<a id="a417b119fa15abb669c5dfde159109a84"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a417b119fa15abb669c5dfde159109a84">&#9670;&nbsp;</a></span>getPageSize()</h2>
+<a id="adc3e832bdf1eaaf01d1629e6b27f8332"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc3e832bdf1eaaf01d1629e6b27f8332">&#9670;&nbsp;</a></span>getPageSize()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename GeomT  = int, typename IndexT  = unsigned&gt; </div>
+template&lt;typename GeomT  = int&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="classdp_1_1rect__pack_1_1RectPacker.html">dp::rect_pack::RectPacker</a>&lt; GeomT, IndexT &gt;::getPageSize </td>
+          <td class="memname">void <a class="el" href="classdp_1_1rect__pack_1_1RectPacker.html">dp::rect_pack::RectPacker</a>&lt; GeomT &gt;::getPageSize </td>
           <td>(</td>
           <td class="paramtype">std::size_t&#160;</td>
           <td class="paramname"><em>pageIndex</em>, </td>
@@ -248,26 +245,26 @@ template&lt;typename GeomT  = int, typename IndexT  = unsigned&gt; </div>
 <p>Return the current size of the page. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir"></td><td class="paramname">pageIndex</td><td>index of the page in range [0..<a class="el" href="classdp_1_1rect__pack_1_1RectPacker.html#a94994e6772887e48b7e4b4bd18519535" title="Return the current number of pages. ">getNumPages()</a>) </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">pageIndex</td><td>index of the page in range [0..<a class="el" href="classdp_1_1rect__pack_1_1RectPacker.html#a2b5637c302518ffc97e6fe374b133850" title="Return the current number of pages. ">getNumPages()</a>) </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">width</td><td>width of the page </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">height</td><td>height of the page</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="classdp_1_1rect__pack_1_1RectPacker.html#a94994e6772887e48b7e4b4bd18519535" title="Return the current number of pages. ">getNumPages()</a>, <a class="el" href="structdp_1_1rect__pack_1_1RectPacker_1_1InsertResult.html#a34ad6745f76f9c144e58f8820666875a" title="Index of the page in which the rectangle was inserted. ">InsertResult::pageIndex</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classdp_1_1rect__pack_1_1RectPacker.html#a2b5637c302518ffc97e6fe374b133850" title="Return the current number of pages. ">getNumPages()</a>, <a class="el" href="structdp_1_1rect__pack_1_1RectPacker_1_1InsertResult.html#a0495d0c614d1247673b423740db3a97c" title="Index of the page in which the rectangle was inserted. ">InsertResult::pageIndex</a> </dd></dl>
 
 </div>
 </div>
-<a id="a2352dfe473dfb335dd268a889c3fce9d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2352dfe473dfb335dd268a889c3fce9d">&#9670;&nbsp;</a></span>insert()</h2>
+<a id="af9d44d86b6087569a2deff88a124c5cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9d44d86b6087569a2deff88a124c5cd">&#9670;&nbsp;</a></span>insert()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename GeomT , typename IndexT &gt; </div>
+template&lt;typename GeomT &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classdp_1_1rect__pack_1_1RectPacker.html">RectPacker</a>&lt; GeomT, IndexT &gt;::<a class="el" href="structdp_1_1rect__pack_1_1RectPacker_1_1InsertResult.html">InsertResult</a> <a class="el" href="classdp_1_1rect__pack_1_1RectPacker.html">dp::rect_pack::RectPacker</a>&lt; GeomT, IndexT &gt;::insert </td>
+          <td class="memname"><a class="el" href="classdp_1_1rect__pack_1_1RectPacker.html">RectPacker</a>&lt; GeomT &gt;::<a class="el" href="structdp_1_1rect__pack_1_1RectPacker_1_1InsertResult.html">InsertResult</a> <a class="el" href="classdp_1_1rect__pack_1_1RectPacker.html">dp::rect_pack::RectPacker</a>&lt; GeomT &gt;::insert </td>
           <td>(</td>
           <td class="paramtype">GeomT&#160;</td>
           <td class="paramname"><em>width</em>, </td>
@@ -287,7 +284,7 @@ template&lt;typename GeomT , typename IndexT &gt; </div>
 </div><div class="memdoc">
 
 <p>Insert a rectangle. </p>
-<p>The rectangles you'll feed to <a class="el" href="classdp_1_1rect__pack_1_1RectPacker.html#a2352dfe473dfb335dd268a889c3fce9d" title="Insert a rectangle. ">insert()</a> should be sorted in descending order by comparing first by height, then by width. A comparison function for std::sort may look like the following: </p><div class="fragment"><div class="line"><span class="keywordtype">bool</span> compare(<span class="keyword">const</span> T&amp; a, <span class="keyword">const</span> T&amp; b)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (a.height != b.height)</div><div class="line">        <span class="keywordflow">return</span> a.height &gt; b.height;</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">        <span class="keywordflow">return</span> a.width &gt; b.width;</div><div class="line">}</div></div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+<p>The rectangles you'll feed to <a class="el" href="classdp_1_1rect__pack_1_1RectPacker.html#af9d44d86b6087569a2deff88a124c5cd" title="Insert a rectangle. ">insert()</a> should be sorted in descending order by comparing first by height, then by width. A comparison function for std::sort may look like the following: </p><div class="fragment"><div class="line"><span class="keywordtype">bool</span> compare(<span class="keyword">const</span> T&amp; a, <span class="keyword">const</span> T&amp; b)</div><div class="line">{</div><div class="line">    <span class="keywordflow">if</span> (a.height != b.height)</div><div class="line">        <span class="keywordflow">return</span> a.height &gt; b.height;</div><div class="line">    <span class="keywordflow">else</span></div><div class="line">        <span class="keywordflow">return</span> a.width &gt; b.width;</div><div class="line">}</div></div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">width</td><td>width of the rectangle </td></tr>
     <tr><td class="paramname">height</td><td>height of the rectangle </td></tr>

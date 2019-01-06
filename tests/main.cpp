@@ -404,6 +404,38 @@ static void testInsert()
         packer.getPageSize(result.pageIndex, w, h);
         assert(w == 10);
         assert(h == 15);
+
+        result = packer.insert(6, 15);
+        assert(result.status == InsertStatus::ok);
+        assert(result.pos.x == 4);
+        assert(result.pos.y == 0);
+        assert(result.pageIndex == 1);
+        assert(packer.getNumPages() == 2);
+        packer.getPageSize(result.pageIndex, w, h);
+        assert(w == 10);
+        assert(h == 15);
+
+        result = packer.insert(10, 10);
+        assert(result.status == InsertStatus::ok);
+        assert(result.pos.x == 0);
+        assert(result.pos.y == 0);
+        assert(result.pageIndex == 2);
+        assert(packer.getNumPages() == 3);
+        packer.getPageSize(result.pageIndex, w, h);
+        assert(w == 10);
+        assert(h == 10);
+
+        // BUG: In versions <= 1.1.0 maxPageHeight is clamped to
+        // maxPageWidth
+        result = packer.insert(10, 1);
+        assert(result.status == InsertStatus::ok);
+        assert(result.pos.x == 0);
+        assert(result.pos.y == 10);
+        assert(result.pageIndex == 2);
+        assert(packer.getNumPages() == 3);
+        packer.getPageSize(result.pageIndex, w, h);
+        assert(w == 10);
+        assert(h == 11);
     }
 
     // Grow down nodes insertion/visit order

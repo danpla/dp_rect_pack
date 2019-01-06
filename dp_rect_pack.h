@@ -520,6 +520,11 @@ bool RectPacker<GeomT>::Page::tryGrow(
         return true;
     }
 
+    if (canGrowDown) {
+        growDown(ctx, rect, pos);
+        return true;
+    }
+
     return false;
 }
 

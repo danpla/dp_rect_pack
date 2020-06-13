@@ -274,7 +274,7 @@ private:
         {}
     };
 
-    class Context;
+    struct Context;
     class Page {
     public:
         Page()

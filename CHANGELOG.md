@@ -1,3 +1,7 @@
+# 1.1.2 (2020-06-14)
+
+* Fixed -Wmismatched-tags when compiling with Clang
+
 
 ## 1.1.1 (2019-01-06)
 

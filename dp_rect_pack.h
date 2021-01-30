@@ -328,6 +328,8 @@ private:
         Context(
             GeomT maxPageWidth, GeomT maxPageHeight,
             const Spacing& rectsSpacing, const Padding& pagePadding);
+
+        static void subtractPadding(GeomT& padding, GeomT& size);
     };
 
     Context ctx;
@@ -358,7 +360,7 @@ RectPacker<GeomT>::insert(GeomT width, GeomT height)
 
     const Size rect(width, height);
 
-    for (std::size_t i = 0, size = pages.size(); i < size; ++i)
+    for (std::size_t i = 0; i < pages.size(); ++i)
         if (pages[i].insert(ctx, rect, result.pos)) {
             result.status = InsertStatus::ok;
             result.pageIndex = i;
@@ -640,40 +642,24 @@ RectPacker<GeomT>::Context::Context(
     if (spacing.y < 0)
         spacing.y = 0;
 
-    if (padding.top < 0)
-        padding.top = 0;
-    else if (padding.top < maxSize.h)
-        maxSize.h -= padding.top;
-    else {
-        padding.top = maxSize.h;
-        maxSize.h = 0;
-    }
+    subtractPadding(padding.top, maxSize.h);
+    subtractPadding(padding.bottom, maxSize.h);
+    subtractPadding(padding.left, maxSize.w);
+    subtractPadding(padding.right, maxSize.w);
+}
 
-    if (padding.bottom < 0)
-        padding.bottom = 0;
-    else if (padding.bottom < maxSize.h)
-        maxSize.h -= padding.bottom;
-    else {
-        padding.bottom = maxSize.h;
-        maxSize.h = 0;
-    }
 
-    if (padding.left < 0)
-        padding.left = 0;
-    else if (padding.left < maxSize.w)
-        maxSize.w -= padding.left;
+template<typename GeomT>
+void RectPacker<GeomT>::Context::subtractPadding(
+    GeomT& padding, GeomT& size)
+{
+    if (padding < 0)
+        padding = 0;
+    else if (padding < size)
+        size -= padding;
     else {
-        padding.left = maxSize.w;
-        maxSize.w = 0;
-    }
-
-    if (padding.right < 0)
-        padding.right = 0;
-    else if (padding.right < maxSize.w)
-        maxSize.w -= padding.right;
-    else {
-        padding.right = maxSize.w;
-        maxSize.w = 0;
+        padding = size;
+        size = 0;
     }
 }
 

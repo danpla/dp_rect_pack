@@ -198,9 +198,9 @@ def write_html(f):
           """))
     f.write(
         '    <p>'
-        'This gallery shows <a href="{}">dp_rect_pack library</a> '
-        'in action. Click on a thumbnail to see the full-size version '
-        'of the image.</p>\n\n'.format(LIB_URL))
+        'This gallery shows various sets of rectangles packed by the '
+        '<a href="{}">dp_rect_pack</a> library. Click on a thumbnail to see '
+        'the full-size version of the image.</p>\n\n'.format(LIB_URL))
 
     titles = []
     for rect_set in RECT_SETS:

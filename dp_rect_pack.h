@@ -1,8 +1,8 @@
 /*
  * Rectangle packing library.
- * v1.1.2
+ * v1.1.3
  *
- * Copyright (c) 2017-2020 Daniel Plakhotich
+ * Copyright (c) 2017-2021 Daniel Plakhotich
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -32,7 +32,7 @@
 
 #define DP_RECT_PACK_VERSION_MAJOR 1
 #define DP_RECT_PACK_VERSION_MINOR 1
-#define DP_RECT_PACK_VERSION_PATCH 2
+#define DP_RECT_PACK_VERSION_PATCH 3
 
 
 namespace dp {

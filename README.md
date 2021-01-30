@@ -13,11 +13,10 @@
 
 ### Documentation
 
-The documentation is embedded in the library and also available
+The documentation is embedded in the library and is also available
 online at https://danpla.github.io/dp_rect_pack.
 
-The demo application included in the source is an example of how to use
-the library (see main.cpp).
+See demo/main.cpp for an example of how to use the library.
 
 
 ### Source code repository and issue tracker

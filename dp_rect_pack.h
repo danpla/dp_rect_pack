@@ -280,7 +280,7 @@ private:
         Page()
             : nodes()
             , rootSize(0, 0)
-            , growDownRootBootomIdx(0)
+            , growDownRootBottomIdx(0)
         {}
 
         Size getSize(const Context& ctx) const
@@ -307,7 +307,7 @@ private:
         Size rootSize;
         // The index of the first leaf bottom node of the new root
         // created in growDown(). See the method for more details.
-        std::size_t growDownRootBootomIdx;
+        std::size_t growDownRootBottomIdx;
 
         bool tryInsert(Context& ctx, const Size& rect, Position& pos);
         bool findNode(
@@ -456,6 +456,7 @@ void RectPacker<GeomT>::Page::subdivideNode(
     assert(node.size.w >= rect.w);
     const GeomT rightW = node.size.w - rect.w;
     const bool hasSpaceRight = rightW > ctx.spacing.x;
+
     assert(node.size.h >= rect.h);
     const GeomT bottomH = node.size.h - rect.h;
     const bool hasSpaceBelow = bottomH > ctx.spacing.y;
@@ -479,8 +480,8 @@ void RectPacker<GeomT>::Page::subdivideNode(
                     bottomW,
                     bottomH - ctx.spacing.y));
 
-            if (nodeIdx <= growDownRootBootomIdx)
-                ++growDownRootBootomIdx;
+            if (nodeIdx <= growDownRootBottomIdx)
+                ++growDownRootBottomIdx;
         }
     } else if (hasSpaceBelow) {
         // Bottom node replaces the current
@@ -488,8 +489,8 @@ void RectPacker<GeomT>::Page::subdivideNode(
         node.size.h = bottomH - ctx.spacing.y;
     } else {
         nodes.erase(nodes.begin() + nodeIdx);
-        if (nodeIdx < growDownRootBootomIdx)
-            --growDownRootBootomIdx;
+        if (nodeIdx < growDownRootBottomIdx)
+            --growDownRootBottomIdx;
     }
 }
 
@@ -554,7 +555,7 @@ void RectPacker<GeomT>::Page::growDown(
                     ctx.padding.top,
                     rect.w - rootSize.w - ctx.spacing.x,
                     rootSize.h));
-            ++growDownRootBootomIdx;
+            ++growDownRootBottomIdx;
         }
 
         rootSize.w = rect.w;
@@ -563,7 +564,7 @@ void RectPacker<GeomT>::Page::growDown(
         // right child of the rect's node, which in turn is the
         // bottom child of the new root.
         nodes.insert(
-            nodes.begin() + growDownRootBootomIdx,
+            nodes.begin() + growDownRootBottomIdx,
             Node(
                 pos.x + rect.w + ctx.spacing.x,
                 pos.y,
@@ -573,7 +574,7 @@ void RectPacker<GeomT>::Page::growDown(
         // The inserted node is visited before the node from the next
         // growDown() since the current new root will be the right
         // child of the next root.
-        ++growDownRootBootomIdx;
+        ++growDownRootBottomIdx;
     }
 
     rootSize.h += ctx.spacing.y + rect.h;
@@ -617,7 +618,7 @@ void RectPacker<GeomT>::Page::growRight(
                 pos.y + rect.h + ctx.spacing.y,
                 rect.w,
                 rootSize.h - rect.h - ctx.spacing.y));
-        ++growDownRootBootomIdx;
+        ++growDownRootBottomIdx;
     }
 
     rootSize.w += ctx.spacing.x + rect.w;
